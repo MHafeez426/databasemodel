@@ -94,8 +94,54 @@ class _MyHomePageState extends State<MyHomePage> {
       _usernameController.text = existingJournal['username'];
       _passwordController.text = existingJournal['password'];
       _emailController.text = existingJournal['email'];
-    }
-  }
+
+
+        showModalBottomSheet(
+            context: context,
+            builder: (__) =>Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Username",
+                      icon: Icon(Icons.account_circle),
+                    ),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "email address",
+                      icon: Icon(Icons.email),
+                    ),
+                  ),
+
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                      icon: Icon(Icons.password),
+                    ),
+                  ),
+                  ElevatedButton(
+                      child: Text("LOGIN"),
+                      onPressed: ()async { if( id== null) {
+                        await _addItem();
+                      }
+
+
+                      if (id != null) {
+                        await _updateItem(id);
+                      }
+
+                      // Clear the text fields
+                      _usernameController.text = '';
+                      _passwordController.text = '';
+                      _emailController.text = '';
+                      await Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => homepage()));
+                      })
+                ]));
+
+    }}
 
 
   @override
@@ -128,59 +174,14 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[ElevatedButton(onPressed: () => _onAlertWithLoginform(context),
+          children: <Widget>[ElevatedButton(onPressed: () => showForm(id),
            child: Text("LOGIN")),
             ElevatedButton(onPressed: (){}, child: Text("SIGNUP"))
-        ]))
+        ])),floatingActionButton: FloatingActionButton(
+      onPressed: () => showForm(id),child: Text("CREATE NEW"),
+    ),
     );
-  }
 
-  _onAlertWithLoginform(context) {
-    Alert(
-        context: context,
-        title: "Login",
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-
-            TextField(
-              decoration: InputDecoration(
-                labelText: "Username",
-                icon: Icon(Icons.account_circle),
-              ),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                labelText: "email address",
-                icon: Icon(Icons.email),
-              ),
-            ),
-
-            TextField(
-              decoration: InputDecoration(
-                labelText: "Password",
-                icon: Icon(Icons.password),
-              ),
-            ),
-          ElevatedButton(
-              child: Text("LOGIN"),
-              onPressed: ()async { if( id== null) {
-                await _addItem();
-              }
-
-
-              if (id != null) {
-                await _updateItem(id);
-              }
-
-              // Clear the text fields
-              _usernameController.text = '';
-              _passwordController.text = '';
-              _emailController.text = '';
-               await Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => homepage()));
-              })
-        ])).show();
   }
   Future<void> _addItem() async{
     await SQLHelper.createItem(_usernameController.text, _passwordController.text, _emailController.text);
