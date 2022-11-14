@@ -80,7 +80,7 @@ class _HiveTodoState extends State<HiveTodo> {
         context: context,
         elevation: MediaQuery.of(context).viewInsets.top,
         isScrollControlled: true,
-        builder: (__) => Column(
+        builder: (_) => Column(
               children: [
                 ListTile(
                   title: TextField(
@@ -133,7 +133,9 @@ class _HiveTodoState extends State<HiveTodo> {
                 style: TextStyle(fontSize: 50),
               ),
             )
-          : ListView.builder(itemBuilder: (_, index) {
+          : Container(child:ListView.builder(shrinkWrap:true,
+          itemBuilder:
+           (_, index) {
               final currentItem = _notes[index];
               return Card(
                 color: Colors.orange,
@@ -149,8 +151,8 @@ class _HiveTodoState extends State<HiveTodo> {
                     _showForm(context, currentItem['key']);
                   },
                 ),
-              );
-            }),
+              );})),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showForm(context, null),
         child: Icon(Icons.create),
