@@ -134,6 +134,7 @@ class _HiveTodoState extends State<HiveTodo> {
               ),
             )
           : Container(child:ListView.builder(shrinkWrap:true,
+          itemCount: _notes.length,
           itemBuilder:
            (_, index) {
               final currentItem = _notes[index];

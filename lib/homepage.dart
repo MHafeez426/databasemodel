@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'sqflite.dart';
 import 'main.dart';
-void main(){
-  runApp(MaterialApp(home: MyApp(),));
-}
 class homepage extends StatefulWidget {
   @override
   State<homepage> createState() => _homepageState();

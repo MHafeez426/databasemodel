@@ -147,7 +147,8 @@ class _HomePageState extends State<HomePage> {
       body: _isLoading ? const Center(
         child: CircularProgressIndicator(),
       )
-          : ListView.builder(
+          :Container(
+        child: ListView.builder(
         itemCount: _journals.length,
         itemBuilder: (context, index) => Card(
           color: Colors.orange[200],
@@ -172,7 +173,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               )),
         ),
-      ),
+      ),),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () => _showForm(null),
